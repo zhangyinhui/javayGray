@@ -101,6 +101,7 @@ public class LoginTest {
                 Document doc = Jsoup.parse(result1);  
         	    String title = doc.title();  
         	    System.out.println(title);  
+        	    
         	    Element a=doc.getElementById("content");  
       	      
         	    Elements li_content=a.getElementsByTag("a");
@@ -109,15 +110,8 @@ public class LoginTest {
         		      String tag=i.tagName();  
         		      if(tag.equals("a"))  
         		      {  
-        		    	  Elements link = doc.select("a[href]");
-        		    	  String relHref = link.attr("href"); // == "/"
-        		    	  String absHref = link.attr("abs:href"); // "http://www.open-open.com/"
-        		    	  System.out.println(relHref);  
-        		    	  System.out.println(absHref);  
-        		    	  
-        		          String fre_content= i.baseUri();  
-        		        
-        		         System.out.println(fre_content);  
+        		    	 
+        		         
         		         if(i.children().size()>0&&i.children()!=null)  
         		         {  
         		         String after_content=i.child(0).text();  

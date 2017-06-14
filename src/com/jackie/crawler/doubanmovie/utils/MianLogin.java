@@ -48,19 +48,19 @@ public class MianLogin {
         System.out.println(captcha_id);
         String login="登录";
         String captcha_solution = "";
-		try {
+		/*try {
 			captcha_solution = Imagescan.getstring();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-        /*System.out.println("请输入验证码：");
+		}*/
+        System.out.println("请输入验证码：");
         BufferedReader buff=new BufferedReader(new InputStreamReader(System.in));
         try {
             captcha_solution=buff.readLine();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         //构建参数
         List<NameValuePair> list=new ArrayList<NameValuePair>();
@@ -84,12 +84,8 @@ public class MianLogin {
             String result=EntityUtils.toString(entity,"utf-8");
 
             while(true){
-            	HttpGet httpGet=new HttpGet(redir);
-                HttpResponse response1=httpClient.execute(httpGet);
-                HttpEntity entity1=response1.getEntity();
-                String result1=EntityUtils.toString(entity1,"utf-8");
-                System.out.println(result1);  
-                
+            	
+            	MsgList.getMSg(httpClient);
                 System.out.println("请输入获取网址：");
                 BufferedReader wz=new BufferedReader(new InputStreamReader(System.in));
                 redir = wz.readLine();

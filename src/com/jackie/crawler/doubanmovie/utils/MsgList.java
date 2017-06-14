@@ -1,6 +1,7 @@
 package com.jackie.crawler.doubanmovie.utils;
 
 import java.io.IOException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -12,10 +13,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class MsgReturn {
-
-	//static String redir="https://www.douban.com/doumail/";    // 输入你登录成功后要跳转的网页
-	static String redir="https://www.douban.com/doumail/102694807/";
+public class MsgList {
+	static String redir="https://www.douban.com/doumail/unread";    // 输入你登录成功后要跳转的网页
+	//static String redir="https://www.douban.com/doumail/102694807/";
 	
 	public static void  getMSg( CloseableHttpClient httpClient){
 		HttpGet httpGet=new HttpGet(redir);
@@ -33,7 +33,7 @@ public class MsgReturn {
 	        
 	        Document doc = Jsoup.parse(result1);  
 	        Element msgcontents = doc.getElementById("content");  
-	        Elements li_content =  msgcontents.getElementsByClass("content");
+	        Elements li_content =  msgcontents.getElementsByClass("title");
 	        
 	        for(Element i:li_content)  
   		  	{  
