@@ -39,20 +39,20 @@ public class MsgList {
   		  	{  
 	        	System.out.println(i.toString());
 	        	System.out.println("------------------");
-	    
-	        	for(int j=0; j<i.childNodeSize(); j++)
-	        	{
-	        		System.out.println(" "+j+" "+ i.childNode(j));
-	        	}
-	        	//System.out.println(i.childNodeSize());
-	        	String linkHref = i.attr("href");
-	        	System.out.println(linkHref);  
-	        	//System.out.println(i.text());    
+	        	
+	        	Elements content=i.getElementsByTag("a");
+	        	for(Element i1:content)  
+      		  	{  
+      		      String linkHref = i1.attr("href");  
+      		      MsgReturn.getMSg(httpClient, linkHref);
+      		      System.out.println( linkHref); 
+
+      		  	}
   		  	}
 	        
 	        System.out.println("-------------------------------------------------------------------------------");  
     	    
-	        System.out.println(result1);  
+	        //System.out.println(result1);  
 	        
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block

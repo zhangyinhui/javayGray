@@ -15,9 +15,9 @@ import org.jsoup.select.Elements;
 public class MsgReturn {
 
 	//static String redir="https://www.douban.com/doumail/";    // 输入你登录成功后要跳转的网页
-	static String redir="https://www.douban.com/doumail/102694807/";
+	//static String redir="https://www.douban.com/doumail/102694807/";
 	
-	public static void  getMSg( CloseableHttpClient httpClient){
+	public static void  getMSg(CloseableHttpClient httpClient,String redir){
 		HttpGet httpGet=new HttpGet(redir);
 		httpGet.setHeader("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36");
 		httpGet.setHeader("Host", "www.douban.com");  

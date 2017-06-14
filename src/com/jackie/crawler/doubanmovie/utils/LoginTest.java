@@ -110,8 +110,6 @@ public class LoginTest {
         		      String tag=i.tagName();  
         		      if(tag.equals("a"))  
         		      {  
-        		    	 
-        		         
         		         if(i.children().size()>0&&i.children()!=null)  
         		         {  
         		         String after_content=i.child(0).text();  
