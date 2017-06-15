@@ -81,11 +81,11 @@ public class MianLogin {
 //                BufferedReader wz=new BufferedReader(new InputStreamReader(System.in));
 //                redir = wz.readLine();
             	try {
-                    Thread.sleep(1000);
+            		Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace(); 
                 }
-                
+                //System.out.println("main-------------------------------------------------------------------------------------");
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();

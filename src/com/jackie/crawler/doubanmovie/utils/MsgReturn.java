@@ -38,7 +38,7 @@ public class MsgReturn {
 		httpGet.setHeader("Accept-Encoding","gzip");  
 		httpGet.setHeader("Accept-Language","zh-CN");
 		httpGet.setHeader("charset", "utf-8"); 
-		
+		System.out.println("content-------------------------------------------------------------------------------------");
         HttpResponse response1;
 		try {
 			response1 = httpClient.execute(httpGet);
@@ -83,9 +83,7 @@ public class MsgReturn {
 	        	System.out.println(msgtex);
 	        	*/    
   		  	}
-	        
-	        SendMsg(httpClient,lastString);
-	        System.out.println("-------------------------------------------------------------------------------");  
+	        //System.out.println("-------------------------------------------------------------------------------");  
 	        
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
@@ -94,6 +92,7 @@ public class MsgReturn {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		SendMsg(httpClient,lastString);
 	}
 	
 	public static void SendMsg(CloseableHttpClient httpClient,String toid){
@@ -104,13 +103,13 @@ public class MsgReturn {
          post.setHeader("Accept-Language","zh-CN");
          post.setHeader("charset", "utf-8"); 
          MultipartEntityBuilder myentity = MultipartEntityBuilder.create(); 
-         
+         System.out.println("send-------------------------------------------------------------------------------------");
          try {
-			myentity.setCharset(CharsetUtils.get("UTF-8"));
+			myentity.setCharset(CharsetUtils.get("UTF-8")); //设置请求的编码格式
 			myentity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//设置浏览器兼容模式
 			myentity.addPart("ck", new StringBody("cewS",ContentType.TEXT_PLAIN));
 			myentity.addPart("to",new StringBody(toid,ContentType.TEXT_PLAIN));
-			myentity.addPart("m_text",new StringBody("就是想告诉你我来到这个神奇的世界上了,不过我还小。", ContentType.create("text/plain", CharsetUtils.get("UTF-8")))); 
+			myentity.addPart("m_text",new StringBody("我只是想你和我说说话了。。", ContentType.create("text/plain", CharsetUtils.get("UTF-8")))); 
             myentity.addPart("m_reply",new StringBody("回应",ContentType.TEXT_PLAIN));  
                
             HttpEntity reqEntity = myentity.build();
@@ -129,6 +128,6 @@ public class MsgReturn {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		};//设置请求的编码格式
+		}
 	}
 }

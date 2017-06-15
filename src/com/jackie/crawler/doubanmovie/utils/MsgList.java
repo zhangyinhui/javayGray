@@ -14,8 +14,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class MsgList {
-	//static String redir="https://www.douban.com/doumail/unread";    // 输入你登录成功后要跳转的网页
-	static String redir="https://www.douban.com/doumail/";
+	static String redir="https://www.douban.com/doumail/unread";    // 输入你登录成功后要跳转的网页
+	//static String redir="https://www.douban.com/doumail/";
 	
 	public static void  getMSg( CloseableHttpClient httpClient){
 		HttpGet httpGet=new HttpGet(redir);
@@ -24,13 +24,13 @@ public class MsgList {
 		httpGet.setHeader("Accept-Encoding","gzip");  
 		httpGet.setHeader("Accept-Language","zh-CN");
 		httpGet.setHeader("charset", "utf-8"); 
-		
+		System.out.println("list-------------------------------------------------------------------------------------");
         HttpResponse response1;
 		try {
 			response1 = httpClient.execute(httpGet);
 			HttpEntity entity1=response1.getEntity();
 	        String result1=EntityUtils.toString(entity1,"utf-8");
-	        
+	        //System.out.println(result1);
 	        Document doc = Jsoup.parse(result1);  
 	        Element msgcontents = doc.getElementById("content");  
 	        Elements li_content =  msgcontents.getElementsByClass("title");
@@ -41,7 +41,7 @@ public class MsgList {
 	        	//System.out.println("------------------");
 	        	
 	        	String linkHref = i.select("a").get(0).attr("href");  
-	        	//System.out.println(linkHref);
+	        	System.out.println(linkHref);
 	        	MsgReturn.getMSg(httpClient, linkHref);
                 
 	        	/*Elements content=i.getElementsByTag("a");
