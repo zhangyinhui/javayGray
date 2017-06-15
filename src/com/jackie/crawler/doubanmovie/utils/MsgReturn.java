@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -38,10 +39,15 @@ public class MsgReturn {
 		httpGet.setHeader("Accept-Encoding","gzip");  
 		httpGet.setHeader("Accept-Language","zh-CN");
 		httpGet.setHeader("charset", "utf-8"); 
+		httpGet.setHeader("Connection", "Keep-Alive");
 		System.out.println("content-------------------------------------------------------------------------------------");
         HttpResponse response1;
 		try {
 			response1 = httpClient.execute(httpGet);
+			if(response1.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+				System.out.println("get请求失败");
+				return;
+			}
 			HttpEntity entity1=response1.getEntity();
 	        String result1=EntityUtils.toString(entity1,"utf-8");
 	        
@@ -102,8 +108,9 @@ public class MsgReturn {
          post.setHeader("Accept-Encoding","gzip");  
          post.setHeader("Accept-Language","zh-CN");
          post.setHeader("charset", "utf-8"); 
+         post.setHeader("Connection", "Keep-Alive");
          MultipartEntityBuilder myentity = MultipartEntityBuilder.create(); 
-         System.out.println("send-------------------------------------------------------------------------------------");
+         
          try {
 			myentity.setCharset(CharsetUtils.get("UTF-8")); //设置请求的编码格式
 			myentity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//设置浏览器兼容模式
@@ -115,6 +122,12 @@ public class MsgReturn {
             HttpEntity reqEntity = myentity.build();
             post.setEntity(reqEntity);  
             HttpResponse response3 = httpClient.execute(post); 
+            if(response3.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+				System.out.println("post请求失败");
+				return;
+			}
+            HttpEntity entity1=response3.getEntity();
+	        String result1=EntityUtils.toString(entity1,"utf-8");
                 
             //HttpEntity entity212=response3.getEntity();
             //String result212=EntityUtils.toString(entity212,"utf-8");
@@ -129,5 +142,7 @@ public class MsgReturn {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		System.out.println("send-------------------------------------------------------------------------------------");
 	}
 }

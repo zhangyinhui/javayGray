@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -24,10 +25,15 @@ public class MsgList {
 		httpGet.setHeader("Accept-Encoding","gzip");  
 		httpGet.setHeader("Accept-Language","zh-CN");
 		httpGet.setHeader("charset", "utf-8"); 
-		System.out.println("list-------------------------------------------------------------------------------------");
+		httpGet.setHeader("Connection", "Keep-Alive");
+		System.out.println("list1-------------------------------------------------------------------------------------");
         HttpResponse response1;
 		try {
 			response1 = httpClient.execute(httpGet);
+			if(response1.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+				System.out.println("get请求失败");
+				return;
+			}
 			HttpEntity entity1=response1.getEntity();
 	        String result1=EntityUtils.toString(entity1,"utf-8");
 	        //System.out.println(result1);
@@ -65,5 +71,6 @@ public class MsgList {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("list222-------------------------------------------------------------------------------------");
 	}
 }
