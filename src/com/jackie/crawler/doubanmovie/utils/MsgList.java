@@ -14,8 +14,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class MsgList {
-	static String redir="https://www.douban.com/doumail/unread";    // 输入你登录成功后要跳转的网页
-	//static String redir="https://www.douban.com/doumail/102694807/";
+	//static String redir="https://www.douban.com/doumail/unread";    // 输入你登录成功后要跳转的网页
+	static String redir="https://www.douban.com/doumail/";
 	
 	public static void  getMSg( CloseableHttpClient httpClient){
 		HttpGet httpGet=new HttpGet(redir);
@@ -37,20 +37,24 @@ public class MsgList {
 	        
 	        for(Element i:li_content)  
   		  	{  
-	        	System.out.println(i.toString());
-	        	System.out.println("------------------");
+	        	//System.out.println(i.toString());
+	        	//System.out.println("------------------");
 	        	
-	        	Elements content=i.getElementsByTag("a");
+	        	String linkHref = i.select("a").get(0).attr("href");  
+	        	//System.out.println(linkHref);
+	        	MsgReturn.getMSg(httpClient, linkHref);
+                
+	        	/*Elements content=i.getElementsByTag("a");
 	        	for(Element i1:content)  
       		  	{  
       		      String linkHref = i1.attr("href");  
       		      MsgReturn.getMSg(httpClient, linkHref);
       		      System.out.println( linkHref); 
 
-      		  	}
+      		  	}*/
   		  	}
 	        
-	        System.out.println("-------------------------------------------------------------------------------");  
+	        //System.out.println("-------------------------------------------------------------------------------");  
     	    
 	        //System.out.println(result1);  
 	        

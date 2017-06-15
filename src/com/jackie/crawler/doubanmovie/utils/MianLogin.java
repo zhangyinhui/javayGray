@@ -19,21 +19,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.CharsetUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class MianLogin {
 	private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -84,11 +75,16 @@ public class MianLogin {
             String result=EntityUtils.toString(entity,"utf-8");
 
             while(true){
-            	
+            	//MsgReturn.getMSg(httpClient, "https://www.douban.com/doumail/102694807/");
             	MsgList.getMSg(httpClient);
-                System.out.println("请输入获取网址：");
-                BufferedReader wz=new BufferedReader(new InputStreamReader(System.in));
-                redir = wz.readLine();
+//                System.out.println("请输入获取网址：");
+//                BufferedReader wz=new BufferedReader(new InputStreamReader(System.in));
+//                redir = wz.readLine();
+            	try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace(); 
+                }
                 
             }
         } catch (ClientProtocolException e) {
