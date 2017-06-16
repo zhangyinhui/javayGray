@@ -62,12 +62,12 @@ public class MianLogin {
         list.add(new BasicNameValuePair("captcha-id", captcha_id));
         list.add(new BasicNameValuePair("login", login));
         HttpPost httpPost = new HttpPost(login_src);
-        httpPost.addHeader("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36");
-        httpPost.addHeader("Host", "www.douban.com");  
-        httpPost.addHeader("Accept-Encoding","gzip");  
-        httpPost.addHeader("Accept-Language","zh-CN");
-        httpPost.addHeader("charset", "utf-8"); 
-        httpPost.addHeader("Connection", "Keep-Alive");
+        httpPost.setHeader("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36");
+        httpPost.setHeader("Host", "www.douban.com");  
+        httpPost.setHeader("Accept-Encoding","gzip");  
+        httpPost.setHeader("Accept-Language","zh-CN");
+        httpPost.setHeader("charset", "utf-8"); 
+        httpPost.setHeader("Connection", "Keep-Alive");
         
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(list));
@@ -83,7 +83,7 @@ public class MianLogin {
 //                BufferedReader wz=new BufferedReader(new InputStreamReader(System.in));
 //                redir = wz.readLine();
             	try {
-            		Thread.sleep(3000);
+            		Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace(); 
                 }

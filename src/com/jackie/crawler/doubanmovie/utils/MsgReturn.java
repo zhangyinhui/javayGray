@@ -122,6 +122,7 @@ public class MsgReturn {
             HttpEntity reqEntity = myentity.build();
             post.setEntity(reqEntity);  
             HttpResponse response3 = httpClient.execute(post); 
+            System.out.println(response3.getStatusLine().getStatusCode());
             if(response3.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 				System.out.println("post请求失败");
 				return;
