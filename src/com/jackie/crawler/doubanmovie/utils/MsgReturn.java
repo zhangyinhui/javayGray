@@ -1,7 +1,10 @@
 package com.jackie.crawler.doubanmovie.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,6 +17,7 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.CharsetUtils;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
@@ -22,11 +26,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class MsgReturn {
+	
+	static String[] msggo={"你好","今天天气真不错","其实我是机器人自动回复的","你是做什么的呢","可以简单介绍一下你自己吗","你是做什么工作的啊","你是哪个大学毕业的啊","对不起，我现在还不会回答问题","等我长大了就好了","不要喜欢我，我不喜欢你","不过我有点羡慕你","你是不是傻啊","不要说了，不想和你说话，再见再也不见","你是谁啊","你干嘛给我发信息","我要去吃饭了","哎，今天心情不好","你呢","88"};
 
 	//static String redir="https://www.douban.com/doumail/";    // 输入你登录成功后要跳转的网页
 	//static String redir="https://www.douban.com/doumail/102694807/";
 	
-	public static void  getMSg(CloseableHttpClient httpClient,String redir){
+	public static void  getMSg(CloseableHttpClient httpClient,String redir, int num){
 		
 		String newStr = new String(redir);
 		newStr = newStr.substring(0,newStr.length()-1);
@@ -40,6 +46,7 @@ public class MsgReturn {
 		httpGet.setHeader("Accept-Language","zh-CN");
 		httpGet.setHeader("charset", "utf-8"); 
 		httpGet.setHeader("Connection", "Keep-Alive");
+		httpGet.setHeader("Cookie",MianLogin.cookie);
 		System.out.println("content-------------------------------------------------------------------------------------");
         HttpResponse response1;
 		try {
@@ -98,10 +105,15 @@ public class MsgReturn {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		SendMsg(httpClient,lastString);
+		try {
+    		Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace(); 
+        }
+		SendMsg(httpClient,lastString,num);
 	}
 	
-	public static void SendMsg(CloseableHttpClient httpClient,String toid){
+	public static void SendMsg(CloseableHttpClient httpClient,String toid,int num){
 		 HttpPost post = new HttpPost("https://www.douban.com/j/doumail/send");  
          post.setHeader("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36");
          post.setHeader("Host", "www.douban.com");  
@@ -109,6 +121,7 @@ public class MsgReturn {
          post.setHeader("Accept-Language","zh-CN");
          post.setHeader("charset", "utf-8"); 
          post.setHeader("Connection", "Keep-Alive");
+         post.setHeader("Cookie",MianLogin.cookie);
          MultipartEntityBuilder myentity = MultipartEntityBuilder.create(); 
          
          try {
@@ -116,7 +129,12 @@ public class MsgReturn {
 			myentity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//设置浏览器兼容模式
 			myentity.addPart("ck", new StringBody("cewS",ContentType.TEXT_PLAIN));
 			myentity.addPart("to",new StringBody(toid,ContentType.TEXT_PLAIN));
-			myentity.addPart("m_text",new StringBody("我只是想你和我说说话了。。", ContentType.create("text/plain", CharsetUtils.get("UTF-8")))); 
+			int numofstr = msggo.length -1;
+			Random random = new Random();
+
+		    int s = random.nextInt(numofstr)%(numofstr-0+1) + 0;
+		       
+			myentity.addPart("m_text",new StringBody(msggo[s], ContentType.create("text/plain", CharsetUtils.get("UTF-8")))); 
             myentity.addPart("m_reply",new StringBody("回应",ContentType.TEXT_PLAIN));  
                
             HttpEntity reqEntity = myentity.build();
@@ -129,6 +147,7 @@ public class MsgReturn {
 			}
             HttpEntity entity1=response3.getEntity();
 	        String result1=EntityUtils.toString(entity1,"utf-8");
+	        System.out.println(result1);
                 
             //HttpEntity entity212=response3.getEntity();
             //String result212=EntityUtils.toString(entity212,"utf-8");

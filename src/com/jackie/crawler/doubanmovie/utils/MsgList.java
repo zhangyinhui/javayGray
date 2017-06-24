@@ -8,6 +8,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +19,7 @@ public class MsgList {
 	static String redir="https://www.douban.com/doumail/unread";    // 输入你登录成功后要跳转的网页
 	//static String redir="https://www.douban.com/doumail/";
 	
-	public static void  getMSg( CloseableHttpClient httpClient){
+	public static void  getMSg( CloseableHttpClient httpClient,int num){
 		HttpGet httpGet=new HttpGet(redir);
 		httpGet.setHeader("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36");
 		httpGet.setHeader("Host", "www.douban.com");  
@@ -26,6 +27,7 @@ public class MsgList {
 		httpGet.setHeader("Accept-Language","zh-CN");
 		httpGet.setHeader("charset", "utf-8"); 
 		httpGet.setHeader("Connection", "Keep-Alive");
+		httpGet.setHeader("Cookie",MianLogin.cookie);
 		System.out.println("list1-------------------------------------------------------------------------------------");
         HttpResponse response1;
 		try {
@@ -48,7 +50,7 @@ public class MsgList {
 	        	
 	        	String linkHref = i.select("a").get(0).attr("href");  
 	        	System.out.println(linkHref);
-	        	MsgReturn.getMSg(httpClient, linkHref);
+	        	MsgReturn.getMSg(httpClient, linkHref, num);
                 
 	        	/*Elements content=i.getElementsByTag("a");
 	        	for(Element i1:content)  

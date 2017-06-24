@@ -19,15 +19,20 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MianLogin {
-	private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+	public static BasicCookieStore cookieStore = new BasicCookieStore();
+	private static CloseableHttpClient httpClient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+	public static String cookie;
 	
 	 //主登录入口
     public static void loginDouban(){
@@ -68,22 +73,40 @@ public class MianLogin {
         httpPost.setHeader("Accept-Language","zh-CN");
         httpPost.setHeader("charset", "utf-8"); 
         httpPost.setHeader("Connection", "Keep-Alive");
+        httpPost.setHeader("Cookie",MianLogin.cookie);
+        
         
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(list));
             HttpResponse response=httpClient.execute(httpPost);
+            
+            List<Cookie> clist = cookieStore.getCookies();
+			System.out.println(clist.size());
+			if(clist.isEmpty())
+			{
+				System.out.println("不存在");
+			}
+			else
+			{
+				for (int i = 0; i < clist.size(); i++) {
+					System.out.println("-"+clist.get(i).toString());
+				}
+			}
+          
             HttpEntity entity=response.getEntity();
             String result=EntityUtils.toString(entity,"utf-8");
+            int i=0;
 
             while(true){
-            	System.out.println("main-------------------------------------------------------------------------------------");
-            	//MsgReturn.getMSg(httpClient, "https://www.douban.com/doumail/102694807/");
-            	MsgList.getMSg(httpClient);
+            	//System.out.println("main-------------------------------------------------------------------------------------");
+            	MsgList.getMSg(httpClient,i);
+            	i++;
+//            	FastFloor.GetMsglist(httpClient);
 //                System.out.println("请输入获取网址：");
 //                BufferedReader wz=new BufferedReader(new InputStreamReader(System.in));
 //                redir = wz.readLine();
             	try {
-            		Thread.sleep(5000);
+            		Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace(); 
                 }
