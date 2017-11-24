@@ -127,14 +127,22 @@ public class MsgReturn {
          try {
 			myentity.setCharset(CharsetUtils.get("UTF-8")); //设置请求的编码格式
 			myentity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//设置浏览器兼容模式
-			myentity.addPart("ck", new StringBody("cewS",ContentType.TEXT_PLAIN));
+			myentity.addPart("ck", new StringBody("S1n6",ContentType.TEXT_PLAIN));
 			myentity.addPart("to",new StringBody(toid,ContentType.TEXT_PLAIN));
 			int numofstr = msggo.length -1;
 			Random random = new Random();
 
-		    int s = random.nextInt(numofstr)%(numofstr-0+1) + 0;
-		       
-			myentity.addPart("m_text",new StringBody(msggo[s], ContentType.create("text/plain", CharsetUtils.get("UTF-8")))); 
+			String captcha_solution = "";
+		    //int s = random.nextInt(numofstr)%(numofstr-0+1) + 0;
+			 System.out.println("请输入要回的信息：");
+		     BufferedReader buff=new BufferedReader(new InputStreamReader(System.in));
+		     try {
+		           captcha_solution=buff.readLine();
+		     	} catch (IOException e) {
+		        e.printStackTrace();
+		     }
+		    System.out.println(captcha_solution);
+			myentity.addPart("m_text",new StringBody(captcha_solution, ContentType.create("text/plain", CharsetUtils.get("UTF-8")))); 
             myentity.addPart("m_reply",new StringBody("回应",ContentType.TEXT_PLAIN));  
                
             HttpEntity reqEntity = myentity.build();

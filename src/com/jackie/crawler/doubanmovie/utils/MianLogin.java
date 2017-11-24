@@ -39,7 +39,7 @@ public class MianLogin {
         String redir="https://www.douban.com/doumail/";    // 输入你登录成功后要跳转的网页
         String login_src="https://accounts.douban.com/login";
         String form_email="1316637851@qq.com";    // 你的用户名
-        String form_password="zyh19920412db";    // 你的密码
+        String form_password="zyh19920412dbf";    // 你的密码
         String captcha_id=getImgID();
         System.out.println(captcha_id);
         String login="登录";
